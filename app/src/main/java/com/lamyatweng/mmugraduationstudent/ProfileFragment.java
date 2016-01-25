@@ -2,69 +2,55 @@ package com.lamyatweng.mmugraduationstudent;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstudent.Student.Student;
 
 public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Get email of currently logged in user
         SessionManager session = new SessionManager(getActivity().getApplicationContext());
         session.checkLogin();
         String userEmail = session.getUserEmail();
 
-        final TextView name = (TextView) rootView.findViewById(R.id.profile_student_name);
-        final TextView id = (TextView) rootView.findViewById(R.id.profile_student_id);
-        final TextView programme = (TextView) rootView.findViewById(R.id.profile_student_programme);
-        final TextView status = (TextView) rootView.findViewById(R.id.profile_student_status);
-        final TextView email = (TextView) rootView.findViewById(R.id.profile_student_email);
-        final TextView creditHour = (TextView) rootView.findViewById(R.id.profile_student_balanceCreditHour);
-        final TextView cgpa = (TextView) rootView.findViewById(R.id.profile_student_CGPA);
-        final TextView muet = (TextView) rootView.findViewById(R.id.profile_student_muet);
-        final TextView financial = (TextView) rootView.findViewById(R.id.profile_student_financialDue);
+        // Get reference of views
+        final TextInputLayout studentNameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_name);
+        final TextInputLayout studentIdWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_id);
+        final TextInputLayout programmeWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_programme);
+        final TextInputLayout studentStatusWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_status);
+        final TextInputLayout emailWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_email);
+        final TextInputLayout creditHourWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_balanceCreditHour);
+        final TextInputLayout cgpaWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_cgpa);
+        final TextInputLayout muetWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_muet);
+        final TextInputLayout financialWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
 
-        // Retrieve student information from Firebase
-        Firebase.setAndroidContext(getActivity());
-        Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
-        Query queryRef = studentRef.orderByChild("email").equalTo(userEmail);
-        queryRef.addChildEventListener(new ChildEventListener() {
+        // Retrieve student information from Firebase and set to display
+        Query studentQuery = Constants.FIREBASE_REF_STUDENTS.orderByChild(Constants.FIREBASE_ATTR_STUDENTS_EMAIL).equalTo(userEmail);
+        studentQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Student student = dataSnapshot.getValue(Student.class);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Student student = dataSnapshot.getChildren().iterator().next().getValue(Student.class);
 
-                name.setText(student.getName());
-                id.setText(student.getId());
-                programme.setText(student.getProgramme());
-                status.setText(student.getStatus());
-                email.setText(student.getEmail());
-                creditHour.setText(String.valueOf(student.getBalanceCreditHour()));
-                cgpa.setText(String.valueOf(student.getCgpa()));
-                muet.setText(String.valueOf(student.getMuet()));
-                financial.setText(String.valueOf(student.getFinancialDue()));
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                studentNameWrapper.getEditText().setText(student.getName());
+                studentIdWrapper.getEditText().setText(student.getId());
+                programmeWrapper.getEditText().setText(student.getProgramme());
+                studentStatusWrapper.getEditText().setText(student.getStatus());
+                emailWrapper.getEditText().setText(student.getEmail());
+                creditHourWrapper.getEditText().setText(Integer.toString(student.getBalanceCreditHour()));
+                cgpaWrapper.getEditText().setText(Double.toString(student.getCgpa()));
+                muetWrapper.getEditText().setText(Integer.toString(student.getMuet()));
+                financialWrapper.getEditText().setText(Double.toString(student.getFinancialDue()));
             }
 
             @Override
@@ -72,7 +58,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        return rootView;
+        return view;
     }
 
     @Override

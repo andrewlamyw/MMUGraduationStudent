@@ -11,8 +11,8 @@ public interface Constants {
     String FIREBASE_STRING_SESSIONS_REF = "https://mmugraduation.firebaseio.com/sessions";
     String FIREBASE_STRING_SEATS_REF = "https://mmugraduation.firebaseio.com/seats";
 
-    Firebase FIREBASE_REF_ROOT = new Firebase("https://mmugraduation.firebaseio.com/");
-    Firebase FIREBASE_REF_STAFF = new Firebase("https://mmugraduationstaff.firebaseio.com/");
+    Firebase FIREBASE_REF_ROOT_STUDENT = new Firebase("https://mmugraduation.firebaseio.com/");
+    Firebase FIREBASE_REF_ROOT_STAFF = new Firebase("https://mmugraduationstaff.firebaseio.com/");
     Firebase FIREBASE_REF_STUDENTS = new Firebase("https://mmugraduation.firebaseio.com/students");
     Firebase FIREBASE_REF_PROGRAMMES = new Firebase("https://mmugraduation.firebaseio.com/programmes");
     Firebase FIREBASE_REF_CONVOCATIONS = new Firebase("https://mmugraduation.firebaseio.com/convocations");
@@ -20,13 +20,14 @@ public interface Constants {
     Firebase FIREBASE_REF_SEATS = new Firebase("https://mmugraduation.firebaseio.com/seats");
     Firebase FIREBASE_REF_CONNECTED = new Firebase("https://mmugraduation.firebaseio.com/.info/connected");
 
+    String FIREBASE_ATTR_STUDENTS_EMAIL = "email";
     String FIREBASE_ATTR_SEATS_SESSIONID = "sessionID";
     String FIREBASE_ATTR_SEATS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ROWSIZE = "rowSize";
     String FIREBASE_ATTR_SESSIONS_CONVOCATIONYEAR = "convocationYear";
-
     String FIREBASE_ATTR_SESSIONS_COLUMNSIZE = "columnSize";
+
     String TITLE_NEWS = "News";
     String TITLE_PROGRAMME = "Programme";
     String TITLE_PROFILE = "Profile";
@@ -51,4 +52,5 @@ public interface Constants {
     String EXTRA_SESSION_CONVOCATION_YEAR = "com.lamyatweng.mmugraduationstaff.SESSION_CONVOCATION_YEAR";
     String EXTRA_SEAT_ID = "com.lamyatweng.mmugraduationstaff.SEAT_ID";
     String EXTRA_SEAT_KEY = "com.lamyatweng.mmugraduationstaff.SEAT_KEY";
+
 }

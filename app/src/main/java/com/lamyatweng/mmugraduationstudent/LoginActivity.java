@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                     spinner.setVisibility(View.VISIBLE);
                     usernameWrapper.setErrorEnabled(false);
                     passwordWrapper.setErrorEnabled(false);
-                    Constants.FIREBASE_REF_ROOT.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+                    Constants.FIREBASE_REF_ROOT_STUDENT.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                         @Override
                         public void onAuthenticated(AuthData authData) {
                             sessionManager.createLoginSession(email);

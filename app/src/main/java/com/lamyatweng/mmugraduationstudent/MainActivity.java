@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         sMainActivity = this;
 
         // Keep specific locations in sync.
-//        Constants.FIREBASE_REF_ROOT.keepSynced(true);
+//        Constants.FIREBASE_REF_ROOT_STUDENT.keepSynced(true);
 
         // Redirects to LoginActivity if user is not logged in
         mSession = new SessionManager(getApplicationContext());
