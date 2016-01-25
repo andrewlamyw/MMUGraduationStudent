@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#004098</color>
+    <color name="colorPrimaryDark">#002f71</color>
+    <color name="colorAccent">#E60012</color>
+
+    <color name="backupColorPrimary">#3F51B5</color>
+    <color name="backupColorPrimaryDark">#303F9F</color>
+    <color name="backupColorAccent1">#FF4081</color>
+    <color name="backupColorAccent2">#E8EAF6</color>
+
+    <color name="seatAvailable">#009688</color>
+    <color name="seatOccupied">#F44336</color>
+    <color name="seatDisabled">#000000</color>
+</resources>

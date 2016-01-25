@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lamyatweng.mmugraduationstudent">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name="com.lamyatweng.mmugraduationstudent.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_mmu_logo_short_24dp"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.lamyatweng.mmugraduationstudent.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.lamyatweng.mmugraduationstudent.LoginActivity"
+            android:noHistory="true" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Convocation.ConvocationEditActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Convocation.ConvocationAddActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Convocation.ConvocationDisplayDetailActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionDisplayDetailActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionListActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionProgrammeListActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionEditActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionAddActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionProgrammeAddActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Seat.SeatDisplayDetailActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Seat.SeatEditActivity" />
+        <activity android:name="com.lamyatweng.mmugraduationstudent.Seat.SeatDisplayArrangementActivity"></activity>
+    </application>
+
+</manifest>
