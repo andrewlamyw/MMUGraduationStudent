@@ -103,11 +103,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (connected) {
-//                    Log.i(getClass().getName(), "connected");
                     sIsConnected = true;
                     Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
                 } else {
-//                    Log.i(getClass().getName(), "not connected");
                     sIsConnected = false;
                     Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
                 }

@@ -23,6 +23,7 @@ public interface Constants {
 
     String FIREBASE_ATTR_STUDENTS_EMAIL = "email";
     String FIREBASE_ATTR_STUDENTS_NAME = "name";
+    String FIREBASE_ATTR_STUDENTS_STATUS = "status";
     String FIREBASE_ATTR_SEATS_SESSIONID = "sessionID";
     String FIREBASE_ATTR_SEATS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ID = "id";
@@ -38,13 +39,13 @@ public interface Constants {
     String TITLE_CONVOCATION = "Convocation";
     String TITLE_SEAT = "Seat";
     String TITLE_SESSION = "Session";
-
     String TITLE_LOGOUT = "Logout";
+
     String MENU_ADD = "Add";
     String MENU_SAVE = "Save";
     String MENU_EDIT = "Edit";
-
     String MENU_DELETE = "Delete";
+
     String EXTRA_CONVOCATION_KEY = "com.lamyatweng.mmugraduationstaff.CONVOCATION_KEY";
     String EXTRA_CONVOCATION_YEAR = "com.lamyatweng.mmugraduationstaff.CONVOCATION_YEAR";
     String EXTRA_SESSION_KEY = "com.lamyatweng.mmugraduationstaff.SESSION_KEY";
@@ -55,4 +56,7 @@ public interface Constants {
     String EXTRA_SEAT_ID = "com.lamyatweng.mmugraduationstaff.SEAT_ID";
     String EXTRA_SEAT_KEY = "com.lamyatweng.mmugraduationstaff.SEAT_KEY";
 
+    String STUDENT_STATUS_ACTIVE = "Active";
+    String STUDENT_STATUS_COMPLETED = "Completed";
+    String STUDENT_STATUS_PENDING_APPROVAL = "Pending approval";
 }

@@ -63,9 +63,7 @@
     </string-array>
     <string-array name="student_status_array">
         <item>Active</item>
-        <item>Complete</item>
-        <item>Pending finance</item>
-        <item>Pending MUET</item>
+        <item>Completed</item>
         <item>Pending approval</item>
     </string-array>
     <string-array name="seat_status_array">
