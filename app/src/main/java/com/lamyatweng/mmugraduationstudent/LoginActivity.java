@@ -23,6 +23,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
+    Boolean mIsConnected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,28 @@ public class LoginActivity extends AppCompatActivity {
         final SessionManager sessionManager = new SessionManager(getApplicationContext());
         final ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar_login);
 
-        // Validate user email and password
+        // Detecting Firebase Connection State
+        Constants.FIREBASE_REF_CONNECTED_STUDENT.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+//                    Log.i(getClass().getName(), "connected");
+                    mIsConnected = true;
+                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
+                } else {
+//                    Log.i(getClass().getName(), "not connected");
+                    mIsConnected = false;
+                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
+
         Button loginButton = (Button) findViewById(R.id.button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +81,9 @@ public class LoginActivity extends AppCompatActivity {
                     Constants.FIREBASE_REF_ROOT_STUDENT.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                         @Override
                         public void onAuthenticated(AuthData authData) {
+                            // Retrieve student child key for future use
                             Query studentQuery = Constants.FIREBASE_REF_STUDENTS.orderByChild(Constants.FIREBASE_ATTR_STUDENTS_EMAIL).equalTo(email);
-                            studentQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            studentQuery.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     if (dataSnapshot.hasChildren()) {
@@ -70,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                     } else {
+                                        // student profile is not found in student children
                                         spinner.setVisibility(View.GONE);
                                         Toast.makeText(getApplicationContext(), "Your profile has been removed. Please contact administrator.", Toast.LENGTH_LONG).show();
                                     }
@@ -84,10 +109,10 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onAuthenticationError(FirebaseError firebaseError) {
                             spinner.setVisibility(View.GONE);
-                            if (MainActivity.sIsConnected)
+                            if (mIsConnected)
                                 Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_SHORT).show();
                             else
-                                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Connection failed", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

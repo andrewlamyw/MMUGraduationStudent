@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
         TextView emailHeader = (TextView) view.findViewById(R.id.header_email);
         emailHeader.setText(mSession.getUserEmail());
 
-        // Detecting Connection State
-        Constants.FIREBASE_REF_CONNECTED.addValueEventListener(new ValueEventListener() {
+        // Detecting Firebase Connection State
+        Constants.FIREBASE_REF_CONNECTED_STUDENT.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 boolean connected = snapshot.getValue(Boolean.class);

@@ -11,6 +11,7 @@ public interface Constants {
     String FIREBASE_STRING_SESSIONS_REF = "https://mmugraduation.firebaseio.com/sessions";
     String FIREBASE_STRING_SEATS_REF = "https://mmugraduation.firebaseio.com/seats";
 
+    Firebase FIREBASE_REF_CONNECTED_STUDENT = new Firebase("https://mmugraduation.firebaseio.com/.info/connected");
     Firebase FIREBASE_REF_ROOT_STUDENT = new Firebase("https://mmugraduation.firebaseio.com/");
     Firebase FIREBASE_REF_ROOT_STAFF = new Firebase("https://mmugraduationstaff.firebaseio.com/");
     Firebase FIREBASE_REF_STUDENTS = new Firebase("https://mmugraduation.firebaseio.com/students");
@@ -18,7 +19,6 @@ public interface Constants {
     Firebase FIREBASE_REF_CONVOCATIONS = new Firebase("https://mmugraduation.firebaseio.com/convocations");
     Firebase FIREBASE_REF_SESSIONS = new Firebase("https://mmugraduation.firebaseio.com/sessions");
     Firebase FIREBASE_REF_SEATS = new Firebase("https://mmugraduation.firebaseio.com/seats");
-    Firebase FIREBASE_REF_CONNECTED = new Firebase("https://mmugraduation.firebaseio.com/.info/connected");
 
     String FIREBASE_ATTR_STUDENTS_EMAIL = "email";
     String FIREBASE_ATTR_SEATS_SESSIONID = "sessionID";
