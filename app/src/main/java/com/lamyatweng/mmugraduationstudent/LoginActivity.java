@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,6 +17,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.lamyatweng.mmugraduationstudent.Student.Student;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,13 +45,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (connected) {
-//                    Log.i(getClass().getName(), "connected");
                     mIsConnected = true;
-                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
                 } else {
-//                    Log.i(getClass().getName(), "not connected");
                     mIsConnected = false;
-                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -81,20 +79,20 @@ public class LoginActivity extends AppCompatActivity {
                     Constants.FIREBASE_REF_ROOT_STUDENT.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                         @Override
                         public void onAuthenticated(AuthData authData) {
-                            // Retrieve student child key for future use
                             Query studentQuery = Constants.FIREBASE_REF_STUDENTS.orderByChild(Constants.FIREBASE_ATTR_STUDENTS_EMAIL).equalTo(email);
                             studentQuery.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // Student profile is found in students child nodes, save student key into shared preference
                                     if (dataSnapshot.hasChildren()) {
                                         DataSnapshot studentSnapshot = dataSnapshot.getChildren().iterator().next();
-                                        Log.e(getClass().getName(), studentSnapshot.getKey());
-                                        sessionManager.createLoginSession(email, studentSnapshot.getKey());
+                                        Student student = studentSnapshot.getValue(Student.class);
+                                        sessionManager.createLoginSession(email, studentSnapshot.getKey(), student.getName());
 
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);
                                     } else {
-                                        // student profile is not found in student children
+                                        // Student profile is not found in students child nodes
                                         spinner.setVisibility(View.GONE);
                                         Toast.makeText(getApplicationContext(), "Your profile has been removed. Please contact administrator.", Toast.LENGTH_LONG).show();
                                     }
@@ -110,9 +108,9 @@ public class LoginActivity extends AppCompatActivity {
                         public void onAuthenticationError(FirebaseError firebaseError) {
                             spinner.setVisibility(View.GONE);
                             if (mIsConnected)
-                                Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_LONG).show();
                             else
-                                Toast.makeText(getApplicationContext(), "Connection failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Connection failed", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

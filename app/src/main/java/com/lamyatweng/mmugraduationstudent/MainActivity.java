@@ -36,12 +36,12 @@ public class MainActivity extends AppCompatActivity {
         // Destroy MainActivity so that MainActivity is removed from back stack
         sMainActivity = this;
 
-        // Keep specific locations in sync.
-//        Constants.FIREBASE_REF_ROOT_STUDENT.keepSynced(true);
-
         // Redirects to LoginActivity if user is not logged in
         mSession = new SessionManager(getApplicationContext());
         mSession.checkLogin();
+
+        // Keep this location in sync. 10MB of previously synced data will be cached
+        Constants.FIREBASE_REF_ROOT_STUDENT.keepSynced(true);
 
         // Set ActionBar
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,10 +90,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Set user email address in navigation drawer header
+        // Set user email address and name in navigation drawer header
         View view = navigationView.getHeaderView(0);
         TextView emailHeader = (TextView) view.findViewById(R.id.header_email);
+        TextView nameHeader = (TextView) view.findViewById(R.id.header_user_name);
         emailHeader.setText(mSession.getUserEmail());
+        nameHeader.setText(mSession.getUserName());
 
         // Detecting Firebase Connection State
         Constants.FIREBASE_REF_CONNECTED_STUDENT.addValueEventListener(new ValueEventListener() {
@@ -103,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
                 if (connected) {
 //                    Log.i(getClass().getName(), "connected");
                     sIsConnected = true;
-                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
                 } else {
 //                    Log.i(getClass().getName(), "not connected");
                     sIsConnected = false;
-                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
                 }
             }
 

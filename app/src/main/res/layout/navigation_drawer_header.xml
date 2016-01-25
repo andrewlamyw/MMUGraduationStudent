@@ -16,7 +16,7 @@
         android:src="@drawable/profile" />
 
     <TextView
-        android:id="@+id/header_username"
+        android:id="@+id/header_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/header_email"
@@ -32,9 +32,9 @@
         android:id="@+id/header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/header_username"
+        android:layout_alignLeft="@+id/header_user_name"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/header_username"
+        android:layout_alignStart="@+id/header_user_name"
         android:layout_marginBottom="8dp"
         android:gravity="start"
         android:textColor="#fff"

@@ -10,7 +10,8 @@ public class SessionManager {
     static final String PREF_NAME = "MMUGradPref";
     static final String IS_LOGIN = "IsLoggedIn";
     static final String KEY_EMAIL = "email";
-    static final String KEY_USERKEY = "userKey";
+    static final String KEY_USER_FIREBASE_KEY = "userFirebaseKey";
+    static final String KEY_USER_NAME = "studentName";
     SharedPreferences mPref;
     SharedPreferences.Editor mEditor;
     Context mContext;
@@ -25,10 +26,11 @@ public class SessionManager {
     /**
      * Create login session
      */
-    public void createLoginSession(String email, String key) {
+    public void createLoginSession(String email, String key, String name) {
         mEditor.putBoolean(IS_LOGIN, true);
         mEditor.putString(KEY_EMAIL, email);
-        mEditor.putString(KEY_USERKEY, key);
+        mEditor.putString(KEY_USER_FIREBASE_KEY, key);
+        mEditor.putString(KEY_USER_NAME, name);
         mEditor.commit();
     }
 
@@ -43,6 +45,14 @@ public class SessionManager {
 
     public String getUserEmail() {
         return mPref.getString(KEY_EMAIL, null);
+    }
+
+    public String getUserName() {
+        return mPref.getString(KEY_USER_NAME, null);
+    }
+
+    public String getKeyUserFirebaseKey() {
+        return mPref.getString(KEY_USER_FIREBASE_KEY, null);
     }
 
     /**
