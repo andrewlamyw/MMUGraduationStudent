@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -12,8 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,10 +58,27 @@ public class LoginActivity extends AppCompatActivity {
                     Constants.FIREBASE_REF_ROOT_STUDENT.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                         @Override
                         public void onAuthenticated(AuthData authData) {
-                            sessionManager.createLoginSession(email);
+                            Query studentQuery = Constants.FIREBASE_REF_STUDENTS.orderByChild(Constants.FIREBASE_ATTR_STUDENTS_EMAIL).equalTo(email);
+                            studentQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.hasChildren()) {
+                                        DataSnapshot studentSnapshot = dataSnapshot.getChildren().iterator().next();
+                                        Log.e(getClass().getName(), studentSnapshot.getKey());
+                                        sessionManager.createLoginSession(email, studentSnapshot.getKey());
 
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        spinner.setVisibility(View.GONE);
+                                        Toast.makeText(getApplicationContext(), "Your profile has been removed. Please contact administrator.", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError firebaseError) {
+                                }
+                            });
                         }
 
                         @Override

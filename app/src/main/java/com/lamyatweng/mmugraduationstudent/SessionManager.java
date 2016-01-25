@@ -10,6 +10,7 @@ public class SessionManager {
     static final String PREF_NAME = "MMUGradPref";
     static final String IS_LOGIN = "IsLoggedIn";
     static final String KEY_EMAIL = "email";
+    static final String KEY_USERKEY = "userKey";
     SharedPreferences mPref;
     SharedPreferences.Editor mEditor;
     Context mContext;
@@ -24,9 +25,10 @@ public class SessionManager {
     /**
      * Create login session
      */
-    public void createLoginSession(String email) {
+    public void createLoginSession(String email, String key) {
         mEditor.putBoolean(IS_LOGIN, true);
         mEditor.putString(KEY_EMAIL, email);
+        mEditor.putString(KEY_USERKEY, key);
         mEditor.commit();
     }
 
@@ -57,7 +59,7 @@ public class SessionManager {
         if (!isLoggedIn()) {
             Intent intent = new Intent(mContext, LoginActivity.class);
             // Close all activities
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             // Start new Activity
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
@@ -72,7 +74,7 @@ public class SessionManager {
         mEditor.clear().commit();
         // Redirect user to login sMainActivity
         Intent intent = new Intent(mContext, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
     }

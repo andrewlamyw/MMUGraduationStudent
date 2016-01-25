@@ -61,6 +61,9 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Set toolbar title text
+     */
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
