@@ -34,12 +34,14 @@ public class StudentDisplayDetailDialogFragment extends DialogFragment {
         final TextInputLayout nameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_name);
         final TextInputLayout idWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_id);
         final TextInputLayout emailWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_email);
-        final TextInputLayout programmeWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_programme);
-        final TextInputLayout statusWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_status);
-        final TextInputLayout creditHourWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_balanceCreditHour);
+        final TextInputLayout programmeWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_programme);
+        final TextInputLayout levelWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_level);
+        final TextInputLayout facultyWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_faculty);
+        final TextInputLayout statusWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_status);
+        final TextInputLayout balanceCreditHourWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_balanceCreditHour);
         final TextInputLayout cgpaWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_cgpa);
-        final TextInputLayout muetWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_muet);
-        final TextInputLayout financialWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
+        final TextInputLayout muetWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_muet);
+        final TextInputLayout financialDueWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
 
         // Retrieve programme details from Firebase and display
         Firebase studentRef = new Firebase(Constants.FIREBASE_STRING_STUDENTS_REF);
@@ -52,12 +54,14 @@ public class StudentDisplayDetailDialogFragment extends DialogFragment {
                     nameWrapper.getEditText().setText(student.getName());
                     idWrapper.getEditText().setText(student.getId());
                     programmeWrapper.getEditText().setText(student.getProgramme());
+                    levelWrapper.getEditText().setText(student.getLevel());
+                    facultyWrapper.getEditText().setText(student.getFaculty());
                     statusWrapper.getEditText().setText(student.getStatus());
                     emailWrapper.getEditText().setText(student.getEmail());
-                    creditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
+                    balanceCreditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
                     cgpaWrapper.getEditText().setText(String.valueOf(student.getCgpa()));
                     muetWrapper.getEditText().setText(String.valueOf(student.getMuet()));
-                    financialWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
+                    financialDueWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
                 }
             }
 
@@ -66,51 +70,6 @@ public class StudentDisplayDetailDialogFragment extends DialogFragment {
 
             }
         });
-
-        /*Query queryRef = studentRef.orderByChild("id").equalTo(studentID);
-        queryRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Student student = dataSnapshot.getValue(Student.class);
-
-                nameWrapper.getEditText().setText(student.getName());
-                idWrapper.getEditText().setText(student.getId());
-                programmeWrapper.getEditText().setText(student.getProgramme());
-                statusWrapper.getEditText().setText(student.getStatus());
-                emailWrapper.getEditText().setText(student.getEmail());
-                creditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
-                cgpaWrapper.getEditText().setText(String.valueOf(student.getCgpa()));
-                muetWrapper.getEditText().setText(String.valueOf(student.getMuet()));
-                financialWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Student student = dataSnapshot.getValue(Student.class);
-
-                nameWrapper.getEditText().setText(student.getName());
-                idWrapper.getEditText().setText(student.getId());
-                programmeWrapper.getEditText().setText(student.getProgramme());
-                statusWrapper.getEditText().setText(student.getStatus());
-                emailWrapper.getEditText().setText(student.getEmail());
-                creditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
-                cgpaWrapper.getEditText().setText(String.valueOf(student.getCgpa()));
-                muetWrapper.getEditText().setText(String.valueOf(student.getMuet()));
-                financialWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
-        });*/
 
         // Set up Toolbar with back, edit and delete button
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);

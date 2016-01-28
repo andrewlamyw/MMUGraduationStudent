@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.lamyatweng.mmugraduationstudent.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,20 +19,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.lamyatweng.mmugraduationstudent.LoginActivity"
+            android:name=".LoginActivity"
             android:noHistory="true" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Convocation.ConvocationEditActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Convocation.ConvocationAddActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Convocation.ConvocationDisplayDetailActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionDisplayDetailActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionListActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionProgrammeListActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionEditActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionAddActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Session.SessionProgrammeAddActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Seat.SeatDisplayDetailActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Seat.SeatEditActivity" />
-        <activity android:name="com.lamyatweng.mmugraduationstudent.Seat.SeatDisplayArrangementActivity"></activity>
+        <activity android:name=".Convocation.ConvocationEditActivity" />
+        <activity android:name=".Convocation.ConvocationAddActivity" />
+        <activity android:name=".Convocation.ConvocationDisplayDetailActivity" />
+        <activity android:name=".Session.SessionDisplayDetailActivity" />
+        <activity android:name=".Session.SessionListActivity" />
+        <activity android:name=".Session.SessionProgrammeListActivity" />
+        <activity android:name=".Session.SessionEditActivity" />
+        <activity android:name=".Session.SessionAddActivity" />
+        <activity android:name=".Session.SessionProgrammeAddActivity" />
+        <activity android:name=".Seat.SeatDisplayDetailActivity" />
+        <activity android:name=".Seat.SeatEditActivity" />
+        <activity android:name=".Seat.SeatDisplayArrangementActivity" />
+        <activity android:name=".Convocation.ConvocationRegistrationActivity" />
+        <activity android:name=".Convocation.ConvocationPaymentActivity" />
+        <activity android:name=".Convocation.ConvocationRegistrationSummaryActivity" />
+        <activity android:name=".Seat.SeatSelectActivity"></activity>
     </application>
 
 </manifest>

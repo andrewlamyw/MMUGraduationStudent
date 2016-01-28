@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.lamyatweng.mmugraduationstudent.R;
 
-public class StudentCustomAdapter extends ArrayAdapter<Student> {
+public class StudentAdapter extends ArrayAdapter<Student> {
 
-    public StudentCustomAdapter(Context context) {
+    public StudentAdapter(Context context) {
         super(context, 0);
     }
 
@@ -25,16 +25,16 @@ public class StudentCustomAdapter extends ArrayAdapter<Student> {
         }
 
         // Get reference of views
-        TextView studentName = (TextView) convertView.findViewById(R.id.studentName);
-        TextView studentId = (TextView) convertView.findViewById(R.id.studentId);
-        TextView studentCourse = (TextView) convertView.findViewById(R.id.studentCourse);
-        TextView studentStatus = (TextView) convertView.findViewById(R.id.studentStatus);
+        TextView name = (TextView) convertView.findViewById(R.id.textView_student_name);
+        TextView id = (TextView) convertView.findViewById(R.id.textView_student_id);
+        TextView programme = (TextView) convertView.findViewById(R.id.textView_student_programme);
+        TextView status = (TextView) convertView.findViewById(R.id.textView_student_status);
 
         // Set text value of views
-        studentName.setText(student.getName());
-        studentId.setText(student.getId());
-        studentCourse.setText(student.getProgramme());
-        studentStatus.setText(student.getStatus());
+        name.setText(student.getName());
+        id.setText(student.getId());
+        programme.setText(student.getProgramme());
+        status.setText(student.getStatus());
 
         return convertView;
     }

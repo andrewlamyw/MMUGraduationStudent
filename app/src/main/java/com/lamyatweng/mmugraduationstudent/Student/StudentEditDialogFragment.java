@@ -19,6 +19,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstudent.Constants;
+import com.lamyatweng.mmugraduationstudent.Programme.Programme;
+import com.lamyatweng.mmugraduationstudent.Programme.ProgrammeAdapter;
 import com.lamyatweng.mmugraduationstudent.R;
 
 public class StudentEditDialogFragment extends DialogFragment {
@@ -36,24 +38,20 @@ public class StudentEditDialogFragment extends DialogFragment {
         // Get references of views
         final TextInputLayout nameWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_name);
         final TextInputLayout idWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_id);
-        final TextInputLayout emailWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_email);
-        final TextInputLayout creditHourWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_balanceCreditHour);
+        final TextInputLayout balanceCreditHourWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_balanceCreditHour);
         final TextInputLayout cgpaWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_cgpa);
-        final TextInputLayout financialWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
+        final TextInputLayout financialDueWrapper = (TextInputLayout) view.findViewById(R.id.wrapper_student_financialDue);
 
         // Populate programmes from Firebase
-        final Spinner programmeSpinner = (Spinner) view.findViewById(R.id.programme_spinner);
-        Firebase.setAndroidContext(getActivity());
-        Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
-        final ArrayAdapter<CharSequence> programmeAdapter = new ArrayAdapter<>(getActivity(), R.layout.multiline_spinner_item);
-        programmeRef.addValueEventListener(new ValueEventListener() {
+        final Spinner programmeSpinner = (Spinner) view.findViewById(R.id.spinner_student_programme);
+        final ProgrammeAdapter programmeAdapter = new ProgrammeAdapter(getActivity());
+        Constants.FIREBASE_REF_PROGRAMMES.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String programmeName;
                 programmeAdapter.clear();
-                for (DataSnapshot courseSnapshot : dataSnapshot.getChildren()) {
-                    programmeName = courseSnapshot.child("name").getValue().toString();
-                    programmeAdapter.add(programmeName);
+                for (DataSnapshot programmeSnapshot : dataSnapshot.getChildren()) {
+                    Programme programme = programmeSnapshot.getValue(Programme.class);
+                    programmeAdapter.add(programme);
                 }
             }
 
@@ -61,7 +59,6 @@ public class StudentEditDialogFragment extends DialogFragment {
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
-        programmeAdapter.setDropDownViewResource(R.layout.multiline_spinner_dropdown_item);
         programmeSpinner.setAdapter(programmeAdapter);
 
         // Populate student statuses from array
@@ -86,15 +83,19 @@ public class StudentEditDialogFragment extends DialogFragment {
                 Student student = dataSnapshot.getValue(Student.class);
                 // Required for handling item removed from Firebase
                 if (student != null) {
+                    String name = student.getProgramme();
+                    String level = student.getLevel();
+                    String faculty = student.getFaculty();
+                    Programme programme = new Programme(name, level, faculty);
+
                     nameWrapper.getEditText().setText(student.getName());
                     idWrapper.getEditText().setText(student.getId());
-                    programmeSpinner.setSelection(programmeAdapter.getPosition(student.getProgramme()));
+                    programmeSpinner.setSelection(programmeAdapter.getPosition(programme));
                     statusSpinner.setSelection(statusAdapter.getPosition(student.getStatus()));
-                    emailWrapper.getEditText().setText(student.getEmail());
-                    creditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
+                    balanceCreditHourWrapper.getEditText().setText(String.valueOf(student.getBalanceCreditHour()));
                     cgpaWrapper.getEditText().setText(String.valueOf(student.getCgpa()));
                     muetSpinner.setSelection(muetAdapter.getPosition(String.valueOf(student.getMuet())));
-                    financialWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
+                    financialDueWrapper.getEditText().setText(String.valueOf(student.getFinancialDue()));
                 }
             }
 
@@ -122,18 +123,23 @@ public class StudentEditDialogFragment extends DialogFragment {
                 switch (item.getTitle().toString()) {
                     case Constants.MENU_SAVE:
                         // Retrieve user inputs
-                        String programme = programmeSpinner.getSelectedItem().toString();
-                        String status = statusSpinner.getSelectedItem().toString();
+                        Programme spinnerProgramme = (Programme) programmeSpinner.getSelectedItem();
+
+                        int balanceCreditHour = Integer.parseInt(balanceCreditHourWrapper.getEditText().getText().toString());
+                        double cgpa = Double.parseDouble(cgpaWrapper.getEditText().getText().toString());
+                        String email = idWrapper.getEditText().getText().toString() + "@student.mmu.edu.my";
+                        String faculty = spinnerProgramme.getFaculty();
+                        double financialDue = Double.parseDouble(financialDueWrapper.getEditText().getText().toString());
+                        String id = idWrapper.getEditText().getText().toString();
+                        String level = spinnerProgramme.getLevel();
                         int muet = Integer.parseInt(muetSpinner.getSelectedItem().toString());
                         String name = nameWrapper.getEditText().getText().toString();
-                        String id = idWrapper.getEditText().getText().toString();
-                        String email = emailWrapper.getEditText().getText().toString();
-                        int balanceCreditHour = Integer.parseInt(creditHourWrapper.getEditText().getText().toString());
-                        double cgpa = Double.parseDouble(cgpaWrapper.getEditText().getText().toString());
-                        double financialDue = Double.parseDouble(financialWrapper.getEditText().getText().toString());
+                        String programme = spinnerProgramme.getName();
+                        String status = statusSpinner.getSelectedItem().toString();
 
                         // Replace old values with new values in Firebase
-                        Student updatedStudent = new Student(name, id, programme, status, email, balanceCreditHour, cgpa, muet, financialDue);
+                        Student updatedStudent = new Student(balanceCreditHour, cgpa, email, faculty,
+                                financialDue, id, level, muet, name, programme, status);
                         studentRef.child(studentKey).setValue(updatedStudent);
 
                         // Display message and close dialog

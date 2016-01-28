@@ -19,6 +19,7 @@ public interface Constants {
     Firebase FIREBASE_REF_PROGRAMMES = new Firebase("https://mmugraduation.firebaseio.com/programmes");
     Firebase FIREBASE_REF_CONVOCATIONS = new Firebase("https://mmugraduation.firebaseio.com/convocations");
     Firebase FIREBASE_REF_SESSIONS = new Firebase("https://mmugraduation.firebaseio.com/sessions");
+    Firebase FIREBASE_REF_SESSIONPROGRAMMES = new Firebase("https://mmugraduation.firebaseio.com/sessionProgrammes");
     Firebase FIREBASE_REF_SEATS = new Firebase("https://mmugraduation.firebaseio.com/seats");
 
     String FIREBASE_ATTR_STUDENTS_EMAIL = "email";
@@ -26,10 +27,12 @@ public interface Constants {
     String FIREBASE_ATTR_STUDENTS_STATUS = "status";
     String FIREBASE_ATTR_SEATS_SESSIONID = "sessionID";
     String FIREBASE_ATTR_SEATS_ID = "id";
+    String FIREBASE_ATTR_SEATS_STATUS = "status";
     String FIREBASE_ATTR_SESSIONS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ROWSIZE = "rowSize";
     String FIREBASE_ATTR_SESSIONS_CONVOCATIONYEAR = "convocationYear";
     String FIREBASE_ATTR_SESSIONS_COLUMNSIZE = "columnSize";
+    String FIREBASE_ATTR_SESSIONPROGRAMMES_NAME = "name";
 
     String TITLE_NEWS = "News";
     String TITLE_PROGRAMME = "Programme";
@@ -39,12 +42,15 @@ public interface Constants {
     String TITLE_CONVOCATION = "Convocation";
     String TITLE_SEAT = "Seat";
     String TITLE_SESSION = "Session";
+    String TITLE_PAYMENT = "Payment";
     String TITLE_LOGOUT = "Logout";
 
     String MENU_ADD = "Add";
     String MENU_SAVE = "Save";
     String MENU_EDIT = "Edit";
     String MENU_DELETE = "Delete";
+    String MENU_NEXT = "Next";
+    String MENU_SUBMIT = "Submit";
 
     String EXTRA_CONVOCATION_KEY = "com.lamyatweng.mmugraduationstaff.CONVOCATION_KEY";
     String EXTRA_CONVOCATION_YEAR = "com.lamyatweng.mmugraduationstaff.CONVOCATION_YEAR";

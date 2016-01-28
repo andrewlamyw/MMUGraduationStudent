@@ -36,7 +36,7 @@ public class SeatDisplayArrangementActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat_display_arrangement);
 
-        // Get sessionId & numOfCol from previous sMainActivity
+        // Get mSessionId & numOfCol from previous sMainActivity
         Intent intent = getIntent();
         final int sessionId = intent.getIntExtra(Constants.EXTRA_SESSION_ID, -1);
         mSessionKey = intent.getStringExtra(Constants.EXTRA_SESSION_KEY);

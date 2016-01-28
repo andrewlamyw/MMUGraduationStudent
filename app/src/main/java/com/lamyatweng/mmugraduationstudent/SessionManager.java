@@ -12,6 +12,10 @@ public class SessionManager {
     static final String KEY_EMAIL = "email";
     static final String KEY_USER_FIREBASE_KEY = "userFirebaseKey";
     static final String KEY_USER_NAME = "studentName";
+    static final String KEY_ROBE_SIZE = "robeSize";
+    static final String KEY_GRATITUDE_MESSAGE = "gratitudeMessage";
+    static final String KEY_NUM_OF_GUEST = "numberOfGuest";
+    static final String KEY_CONVO_ATTEND = "convocationAttendance";
     SharedPreferences mPref;
     SharedPreferences.Editor mEditor;
     Context mContext;
@@ -32,6 +36,29 @@ public class SessionManager {
         mEditor.putString(KEY_USER_FIREBASE_KEY, key);
         mEditor.putString(KEY_USER_NAME, name);
         mEditor.commit();
+    }
+
+    public void setAttendConvo(Boolean convoAttend, String robeSize, String gratitudeMessage, int numberOfGuest) {
+        mEditor.putBoolean(KEY_CONVO_ATTEND, convoAttend);
+        mEditor.putString(KEY_ROBE_SIZE, robeSize);
+        mEditor.putString(KEY_GRATITUDE_MESSAGE, gratitudeMessage);
+        mEditor.putInt(KEY_NUM_OF_GUEST, numberOfGuest);
+    }
+
+    public void setConvocationAttendance(Boolean convoAttend) {
+        mEditor.putBoolean(KEY_CONVO_ATTEND, convoAttend);
+    }
+
+    public void setRobesize(String robeSize) {
+        mEditor.putString(KEY_ROBE_SIZE, robeSize);
+    }
+
+    public void setGratitudeMessage(String gratitudeMessage) {
+        mEditor.putString(KEY_GRATITUDE_MESSAGE, gratitudeMessage);
+    }
+
+    public void setNumberOfGuest(int numberOfGuest) {
+        mEditor.putInt(KEY_NUM_OF_GUEST, numberOfGuest);
     }
 
     /**
@@ -88,4 +115,6 @@ public class SessionManager {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
     }
+
+
 }

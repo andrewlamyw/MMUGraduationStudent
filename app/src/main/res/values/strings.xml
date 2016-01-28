@@ -18,6 +18,8 @@
     <string name="title_search">Search</string>
     <string name="title_share">Share</string>
     <string name="title_filter">Filter</string>
+    <string name="title_add">Add</string>
+    <string name="title_next">Next</string>
 
     <!-- Bundle keys -->
     <string name="key_student_key">studentKey</string>
@@ -31,10 +33,24 @@
     <string name="key_session_key">sessionKey</string>
     <string name="key_session_id">sessionId</string>
 
+    <!-- Robe size for array -->
+    <string name="robe_size_xs">XS</string>
+    <string name="robe_size_s">S</string>
+    <string name="robe_size_m">M</string>
+    <string name="robe_size_l">L</string>
+    <string name="robe_size_xl">XL</string>
+    <string name="robe_size_xxl">XXL</string>
+
+    <!-- Seat status -->
+    <string name="seat_status_available">Available</string>
+    <string name="seat_status_occupied">Occupied</string>
+    <string name="seat_status_disabled">Disabled</string>
+    <string name="seat_status_selected">Selected</string>
+
     <!-- Others -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
-    <string name="title_add">Add</string>
+    <string name="title_submit">Submit</string>
 
     <!-- Array -->
     <string-array name="programme_array">
@@ -67,9 +83,9 @@
         <item>Pending approval</item>
     </string-array>
     <string-array name="seat_status_array">
-        <item>Available</item>
-        <item>Occupied</item>
-        <item>Disabled</item>
+        <item>@string/seat_status_available</item>
+        <item>@string/seat_status_occupied</item>
+        <item>@string/seat_status_disabled</item>
     </string-array>
     <string-array name="muet_grading_array">
         <item>0</item>
@@ -79,5 +95,49 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
+    </string-array>
+    <string-array name="robe_size">
+        <item>@string/robe_size_xs</item>
+        <item>@string/robe_size_s</item>
+        <item>@string/robe_size_m</item>
+        <item>@string/robe_size_l</item>
+        <item>@string/robe_size_xl</item>
+        <item>@string/robe_size_xxl</item>
+    </string-array>
+    <string-array name="number_of_guest">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="month">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="year">
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+        <item>2022</item>
+        <item>2023</item>
+        <item>2024</item>
+        <item>2025</item>
+        <item>2026</item>
+        <item>2027</item>
+        <item>2028</item>
+        <item>2029</item>
+        <item>2030</item>
     </string-array>
 </resources>

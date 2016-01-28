@@ -54,6 +54,9 @@ public class SeatAdapter extends ArrayAdapter<Seat> {
                 case "Occupied":
                     viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatOccupied));
                     break;
+                case "Selected":
+                    viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatSelected));
+                    break;
                 case "Disabled":
                     viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatDisabled));
                     break;

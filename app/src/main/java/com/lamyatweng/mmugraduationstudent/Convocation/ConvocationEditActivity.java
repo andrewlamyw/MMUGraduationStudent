@@ -78,17 +78,18 @@ public class ConvocationEditActivity extends AppCompatActivity {
             }
         });
 
-        // Set up Toolbar with close and save button
+        // Set up Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Edit " + Constants.TITLE_CONVOCATION);
+        // Close button
         toolbar.setNavigationIcon(R.mipmap.ic_close_white_24dp);
-        // Close dialog
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        // Commit: update programme information into Firebase
+        // Save button
         toolbar.inflateMenu(R.menu.convocation_edit);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

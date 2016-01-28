@@ -35,7 +35,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Student name"
-                    android:inputType="textCapWords" />
+                    android:inputType="textCapWords"
+                    android:textSize="36sp" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -60,7 +61,7 @@
                 android:text="Programme" />
 
             <Spinner
-                android:id="@+id/programme_spinner"
+                android:id="@+id/spinner_student_programme"
                 style="@style/Base.Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,20 +79,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/wrapper_student_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="16dp">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:paddingTop="4dp" />
-            </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/wrapper_student_balanceCreditHour"

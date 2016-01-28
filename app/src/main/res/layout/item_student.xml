@@ -2,18 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/studentName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp"
-        android:text="Lam Yat Weng"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,31 +11,34 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/studentId"
+            android:id="@+id/textView_student_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
             android:text="1102703431" />
 
         <TextView
-            android:id="@+id/studentStatus"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView_student_status"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:text="Active" />
+            android:gravity="end"
+            android:text="Active"
+            android:textStyle="italic" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/studentCourse"
+        android:id="@+id/textView_student_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="Faculty of Computing and Informatics"
+        android:singleLine="true"
+        android:text="Lam Yat Weng"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textView_student_programme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="Bachelor of Engineering (Honours) Electronics majoring in Robotics and Automation"
         android:textColor="@android:color/darker_gray" />
 </LinearLayout>

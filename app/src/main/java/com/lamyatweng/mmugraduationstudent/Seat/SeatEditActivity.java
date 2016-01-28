@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstudent.Constants;
@@ -44,8 +43,7 @@ public class SeatEditActivity extends AppCompatActivity {
         seatStatusSpinner.setAdapter(seatStatusAdapter);
 
         // Retrieve seat details from Firebase and display
-        final Firebase seatRef = new Firebase(Constants.FIREBASE_STRING_SEATS_REF);
-        seatRef.child(seatKey).addValueEventListener(new ValueEventListener() {
+        Constants.FIREBASE_REF_SEATS.child(seatKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Seat seat = dataSnapshot.getValue(Seat.class);
@@ -94,7 +92,7 @@ public class SeatEditActivity extends AppCompatActivity {
 
                         // Replace old values with new values in Firebase
                         Seat updatedSeat = new Seat(id, row, column, status, sessionID, studentID);
-                        seatRef.child(seatKey).setValue(updatedSeat);
+                        Constants.FIREBASE_REF_SEATS.child(seatKey).setValue(updatedSeat);
 
                         // Display message and close dialog
                         Toast.makeText(getApplicationContext(), Constants.TITLE_SEAT + " updated.", Toast.LENGTH_LONG).show();

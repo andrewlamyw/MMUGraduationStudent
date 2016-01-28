@@ -1,6 +1,7 @@
 package com.lamyatweng.mmugraduationstudent;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.lamyatweng.mmugraduationstudent.Convocation.ConvocationRegistrationActivity;
 import com.lamyatweng.mmugraduationstudent.Student.Student;
 
 public class GraduationFragment extends Fragment {
@@ -55,7 +57,8 @@ public class GraduationFragment extends Fragment {
                         button.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // button will open convocation fragment and checked convocation in navigation drawer
+                                Intent intent = new Intent(getActivity(), ConvocationRegistrationActivity.class);
+                                startActivity(intent);
                             }
                         });
                         break;

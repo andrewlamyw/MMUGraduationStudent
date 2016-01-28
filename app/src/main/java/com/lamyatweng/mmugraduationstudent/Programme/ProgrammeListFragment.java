@@ -32,7 +32,7 @@ public class ProgrammeListFragment extends Fragment {
 
         // Populate programmes sort by name from Firebase into ListView
         Firebase.setAndroidContext(getActivity());
-        final ProgrammeCustomAdapter adapter = new ProgrammeCustomAdapter(getActivity());
+        final ProgrammeAdapter adapter = new ProgrammeAdapter(getActivity());
         final Firebase programmeRef = new Firebase(Constants.FIREBASE_STRING_PROGRAMMES_REF);
         Query programmeQuery = programmeRef.orderByChild("name");
         programmeQuery.addValueEventListener(new ValueEventListener() {

@@ -12,4 +12,5 @@
     <color name="seatAvailable">#009688</color>
     <color name="seatOccupied">#F44336</color>
     <color name="seatDisabled">#000000</color>
+    <color name="seatSelected">@color/colorPrimary</color>
 </resources>
