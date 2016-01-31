@@ -9,6 +9,8 @@ public class Seat {
     int sessionID;
     String studentID;
 
+    // Required default constructor for Firebase object mapping
+    @SuppressWarnings("unused")
     public Seat() {
     }
 
@@ -35,6 +37,10 @@ public class Seat {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getSessionID() {

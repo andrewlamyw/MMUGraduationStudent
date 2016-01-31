@@ -51,7 +51,7 @@ public class GraduationFragment extends Fragment {
 
                 switch (studentStatus) {
                     case Constants.STUDENT_STATUS_COMPLETED:
-                        textView.setText("Congratulation, your graduation application has been approved. You can now proceed with convocation registration.");
+                        textView.setText("CONGRATULATION!\n\nYour application has been approved, please proceed with convocation registration.");
                         button.setVisibility(View.VISIBLE);
                         button.setText("CONVOCATION");
                         button.setOnClickListener(new View.OnClickListener() {

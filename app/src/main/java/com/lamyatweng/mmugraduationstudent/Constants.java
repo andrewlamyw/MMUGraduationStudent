@@ -21,6 +21,7 @@ public interface Constants {
     Firebase FIREBASE_REF_SESSIONS = new Firebase("https://mmugraduation.firebaseio.com/sessions");
     Firebase FIREBASE_REF_SESSIONPROGRAMMES = new Firebase("https://mmugraduation.firebaseio.com/sessionProgrammes");
     Firebase FIREBASE_REF_SEATS = new Firebase("https://mmugraduation.firebaseio.com/seats");
+    Firebase FIREBASE_REF_ORDERS = new Firebase("https://mmugraduation.firebaseio.com/orders");
 
     String FIREBASE_ATTR_STUDENTS_EMAIL = "email";
     String FIREBASE_ATTR_STUDENTS_NAME = "name";
@@ -28,6 +29,7 @@ public interface Constants {
     String FIREBASE_ATTR_SEATS_SESSIONID = "sessionID";
     String FIREBASE_ATTR_SEATS_ID = "id";
     String FIREBASE_ATTR_SEATS_STATUS = "status";
+    String FIREBASE_ATTR_SEATS_STUDENTID = "studentID";
     String FIREBASE_ATTR_SESSIONS_ID = "id";
     String FIREBASE_ATTR_SESSIONS_ROWSIZE = "rowSize";
     String FIREBASE_ATTR_SESSIONS_CONVOCATIONYEAR = "convocationYear";
@@ -54,6 +56,16 @@ public interface Constants {
 
     String EXTRA_CONVOCATION_KEY = "com.lamyatweng.mmugraduationstaff.CONVOCATION_KEY";
     String EXTRA_CONVOCATION_YEAR = "com.lamyatweng.mmugraduationstaff.CONVOCATION_YEAR";
+    String EXTRA_CONVOCATION_ORDER_ATTENDANCE = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_ATTENDANCE";
+    String EXTRA_CONVOCATION_ORDER_ROBE_SIZE = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_ROBE_SIZE";
+    String EXTRA_CONVOCATION_ORDER_GRATITUDE_MESSAGE = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_GRATITUDE_MESSAGE";
+    String EXTRA_CONVOCATION_ORDER_NUMBER_OF_GUEST = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_NUMBER_OF_GUEST";
+    String EXTRA_CONVOCATION_ORDER_DATE = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_DATE";
+    String EXTRA_CONVOCATION_ORDER_START_TIME = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_START_TIME";
+    String EXTRA_CONVOCATION_ORDER_END_TIME = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_END_TIME";
+    String EXTRA_CONVOCATION_ORDER_SEAT_1 = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_SEAT_1";
+    String EXTRA_CONVOCATION_ORDER_SEAT_2 = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_SEAT_2";
+    String EXTRA_CONVOCATION_ORDER_SESSION_ID = "com.lamyatweng.mmugraduationstaff.CONVOCATION_ORDER_SESSION_ID";
     String EXTRA_SESSION_KEY = "com.lamyatweng.mmugraduationstaff.SESSION_KEY";
     String EXTRA_SESSION_ID = "com.lamyatweng.mmugraduationstaff.SESSION_ID";
     String EXTRA_SESSION_COLUMN_SIZE = "com.lamyatweng.mmugraduationstaff.SESSION_COLUMN_SIZE";
@@ -65,4 +77,9 @@ public interface Constants {
     String STUDENT_STATUS_ACTIVE = "Active";
     String STUDENT_STATUS_COMPLETED = "Completed";
     String STUDENT_STATUS_PENDING_APPROVAL = "Pending approval";
+
+    String PROGRAMME_LEVEL_DIPLOMA = "Diploma";
+    String PROGRAMME_LEVEL_BACHELOR = "Bachelor's Degree";
+    String PROGRAMME_LEVEL_MASTER = "Master's Degree";
+    String PROGRAMME_LEVEL_DOCTORATE = "Doctorate";
 }

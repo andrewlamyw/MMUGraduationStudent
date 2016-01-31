@@ -30,8 +30,12 @@
     <string name="key_timePicker_textView_id">timePickerTextViewId</string>
     <string name="key_fragment_class_name">fragmentClassName</string>
     <string name="key_convocation_key">convocationKey</string>
+    <string name="key_convocation_attendance">convocationAttendance</string>
     <string name="key_session_key">sessionKey</string>
     <string name="key_session_id">sessionId</string>
+    <string name="key_gratitude_message">gratitudeMessage</string>
+    <string name="key_robe_size">robeSize</string>
+    <string name="key_number_of_guest">numberOfGuest</string>
 
     <!-- Robe size for array -->
     <string name="robe_size_xs">XS</string>
@@ -47,6 +51,12 @@
     <string name="seat_status_disabled">Disabled</string>
     <string name="seat_status_selected">Selected</string>
 
+    <!-- Programme levels -->
+    <string name="programme_level_diploma">Diploma</string>
+    <string name="programme_level_bachelor">Bachelor\'s Degree</string>
+    <string name="programme_level_master">Master\'s Degree</string>
+    <string name="programme_level_doctorate">Doctorate</string>
+
     <!-- Others -->
     <string name="drawer_open">Open drawer</string>
     <string name="drawer_close">Close drawer</string>
@@ -60,10 +70,10 @@
         <item>Diploma in Electronic Engineering</item>
     </string-array>
     <string-array name="programme_level_array">
-        <item>Diploma</item>
-        <item>Bachelor\'s Degree</item>
-        <item>Master\'s Degree</item>
-        <item>Doctorate</item>
+        <item>@string/programme_level_diploma</item>
+        <item>@string/programme_level_bachelor</item>
+        <item>@string/programme_level_master</item>
+        <item>@string/programme_level_doctorate</item>
     </string-array>
     <string-array name="faculty_array">
         <item>Centre for Diploma Programme</item>

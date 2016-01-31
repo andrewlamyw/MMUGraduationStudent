@@ -9,8 +9,9 @@
     <color name="backupColorAccent1">#FF4081</color>
     <color name="backupColorAccent2">#E8EAF6</color>
 
-    <color name="seatAvailable">#009688</color>
-    <color name="seatOccupied">#F44336</color>
+    <color name="seatAvailable">#43A047</color>
+    <color name="seatOccupied">#757575</color>
     <color name="seatDisabled">#000000</color>
-    <color name="seatSelected">@color/colorPrimary</color>
+    <color name="seatSelectDisabled">#fff</color>
+    <color name="seatSelected">#F44336</color>
 </resources>

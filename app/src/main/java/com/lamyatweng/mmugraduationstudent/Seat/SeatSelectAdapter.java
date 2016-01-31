@@ -11,18 +11,18 @@ import android.widget.TextView;
 
 import com.lamyatweng.mmugraduationstudent.R;
 
-public class SeatAdapter extends ArrayAdapter<Seat> {
+public class SeatSelectAdapter extends ArrayAdapter<Seat> {
 
     Context mContext;
 
-    public SeatAdapter(Context mContext) {
+    public SeatSelectAdapter(Context mContext) {
         super(mContext, 0);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolderItem viewHolder;
+        ViewHolderItem1 viewHolder;
 
         if (convertView == null) {
             // inflate layout
@@ -30,15 +30,17 @@ public class SeatAdapter extends ArrayAdapter<Seat> {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.item_seat_select, parent, false);
             // set up ViewHolder
-            viewHolder = new ViewHolderItem();
+            viewHolder = new ViewHolderItem1();
             viewHolder.textViewRow = (TextView) convertView.findViewById(R.id.textView_seat_row);
             viewHolder.textViewColumn = (TextView) convertView.findViewById(R.id.textView_seat_column);
             viewHolder.itemSeatContainer = (LinearLayout) convertView.findViewById(R.id.item_seat_container);
+            viewHolder.textViewRowLabel = (TextView) convertView.findViewById(R.id.textView_seat_rowLabel);
+            viewHolder.textViewColumnLabel = (TextView) convertView.findViewById(R.id.textView_seat_columnLabel);
 
             // store holder with view
             convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolderItem) convertView.getTag();
+            viewHolder = (ViewHolderItem1) convertView.getTag();
         }
 
         Seat seat = getItem(position);
@@ -50,16 +52,24 @@ public class SeatAdapter extends ArrayAdapter<Seat> {
             switch (seat.getStatus()) {
                 case "Available":
                     viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatAvailable));
+                    viewHolder.itemSeatContainer.setVisibility(View.VISIBLE);
                     break;
                 case "Occupied":
                     viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatOccupied));
+                    viewHolder.itemSeatContainer.setVisibility(View.VISIBLE);
                     break;
                 case "Selected":
                     viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatSelected));
+                    viewHolder.itemSeatContainer.setVisibility(View.VISIBLE);
                     break;
                 case "Disabled":
-                    viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatDisabled));
-//                    viewHolder.itemSeatContainer.setVisibility(View.INVISIBLE);
+//                    viewHolder.itemSeatContainer.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.seatSelectDisabled));
+//                    viewHolder.itemSeatContainer.setBackgroundColor(Color.TRANSPARENT);
+//                    viewHolder.textViewColumn.setTextColor(Color.TRANSPARENT);
+//                    viewHolder.textViewRow.setTextColor(Color.TRANSPARENT);
+//                    viewHolder.textViewRowLabel.setTextColor(Color.TRANSPARENT);
+//                    viewHolder.textViewColumnLabel.setTextColor(Color.TRANSPARENT);
+                    viewHolder.itemSeatContainer.setVisibility(View.INVISIBLE);
                     break;
             }
         }
@@ -68,8 +78,10 @@ public class SeatAdapter extends ArrayAdapter<Seat> {
     }
 }
 
-class ViewHolderItem {
+class ViewHolderItem1 {
     TextView textViewRow;
     TextView textViewColumn;
     LinearLayout itemSeatContainer;
+    TextView textViewRowLabel;
+    TextView textViewColumnLabel;
 }

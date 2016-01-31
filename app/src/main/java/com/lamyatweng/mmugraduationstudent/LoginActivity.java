@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (dataSnapshot.hasChildren()) {
                                         DataSnapshot studentSnapshot = dataSnapshot.getChildren().iterator().next();
                                         Student student = studentSnapshot.getValue(Student.class);
-                                        sessionManager.createLoginSession(email, studentSnapshot.getKey(), student.getName());
+                                        sessionManager.createLoginSession(email, studentSnapshot.getKey(), student.getName(), student.getId(), student.getProgramme(), student.getFaculty(), student.getLevel());
 
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         startActivity(intent);

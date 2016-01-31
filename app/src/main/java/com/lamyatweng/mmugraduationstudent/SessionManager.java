@@ -12,10 +12,10 @@ public class SessionManager {
     static final String KEY_EMAIL = "email";
     static final String KEY_USER_FIREBASE_KEY = "userFirebaseKey";
     static final String KEY_USER_NAME = "studentName";
-    static final String KEY_ROBE_SIZE = "robeSize";
-    static final String KEY_GRATITUDE_MESSAGE = "gratitudeMessage";
-    static final String KEY_NUM_OF_GUEST = "numberOfGuest";
-    static final String KEY_CONVO_ATTEND = "convocationAttendance";
+    static final String KEY_STUDENT_ID = "studentId";
+    static final String KEY_PROGRAMME = "programme";
+    static final String KEY_FACULTY = "faculty";
+    static final String KEY_LEVEL = "level";
     SharedPreferences mPref;
     SharedPreferences.Editor mEditor;
     Context mContext;
@@ -30,35 +30,16 @@ public class SessionManager {
     /**
      * Create login session
      */
-    public void createLoginSession(String email, String key, String name) {
+    public void createLoginSession(String email, String key, String name, String studentId, String programme, String faculty, String level) {
         mEditor.putBoolean(IS_LOGIN, true);
         mEditor.putString(KEY_EMAIL, email);
         mEditor.putString(KEY_USER_FIREBASE_KEY, key);
         mEditor.putString(KEY_USER_NAME, name);
+        mEditor.putString(KEY_STUDENT_ID, studentId);
+        mEditor.putString(KEY_PROGRAMME, programme);
+        mEditor.putString(KEY_FACULTY, faculty);
+        mEditor.putString(KEY_LEVEL, level);
         mEditor.commit();
-    }
-
-    public void setAttendConvo(Boolean convoAttend, String robeSize, String gratitudeMessage, int numberOfGuest) {
-        mEditor.putBoolean(KEY_CONVO_ATTEND, convoAttend);
-        mEditor.putString(KEY_ROBE_SIZE, robeSize);
-        mEditor.putString(KEY_GRATITUDE_MESSAGE, gratitudeMessage);
-        mEditor.putInt(KEY_NUM_OF_GUEST, numberOfGuest);
-    }
-
-    public void setConvocationAttendance(Boolean convoAttend) {
-        mEditor.putBoolean(KEY_CONVO_ATTEND, convoAttend);
-    }
-
-    public void setRobesize(String robeSize) {
-        mEditor.putString(KEY_ROBE_SIZE, robeSize);
-    }
-
-    public void setGratitudeMessage(String gratitudeMessage) {
-        mEditor.putString(KEY_GRATITUDE_MESSAGE, gratitudeMessage);
-    }
-
-    public void setNumberOfGuest(int numberOfGuest) {
-        mEditor.putInt(KEY_NUM_OF_GUEST, numberOfGuest);
     }
 
     /**
@@ -70,12 +51,28 @@ public class SessionManager {
         return user;
     }
 
+    public String getProgramme() {
+        return mPref.getString(KEY_PROGRAMME, null);
+    }
+
+    public String getFaculty() {
+        return mPref.getString(KEY_FACULTY, null);
+    }
+
+    public String getLevel() {
+        return mPref.getString(KEY_LEVEL, null);
+    }
+
     public String getUserEmail() {
         return mPref.getString(KEY_EMAIL, null);
     }
 
     public String getUserName() {
         return mPref.getString(KEY_USER_NAME, null);
+    }
+
+    public String getStudentId() {
+        return mPref.getString(KEY_STUDENT_ID, null);
     }
 
     public String getKeyUserFirebaseKey() {

@@ -24,7 +24,8 @@ import com.lamyatweng.mmugraduationstudent.R;
 public class SeatDisplayArrangementActivity extends AppCompatActivity
         implements SeatAddDialogFragment.OnCreateSeatDialogButtonClicked, SeatDeleteDialogFragment.OnDeleteSeatDialogButtonClicked {
 
-    final int GRID_COLUMN_WIDTH_IN_DP = 24;
+    final int GRID_COLUMN_WIDTH_IN_DP = 39; // default 24
+
     Query mSeatQuery;
     ValueEventListener mSeatListener;
     SeatAdapter mSeatAdapter;

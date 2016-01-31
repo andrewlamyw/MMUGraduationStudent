@@ -13,7 +13,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:orientation="horizontal">
 
         <TextView
@@ -22,6 +21,8 @@
             android:layout_weight="1"
             android:background="@color/seatAvailable"
             android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
             android:text="Available"
             android:textColor="@android:color/white" />
 
@@ -31,6 +32,8 @@
             android:layout_weight="1"
             android:background="@color/seatOccupied"
             android:gravity="center"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
             android:text="Occupied"
             android:textColor="@android:color/white" />
 
@@ -38,15 +41,117 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/seatDisabled"
+            android:background="@color/seatSelected"
             android:gravity="center"
-            android:text="Disabled"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:text="Selected"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_convocation_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Convocation session: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_convocation_session"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_convocation_startTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - " />
+
+            <TextView
+                android:id="@+id/textView_convocation_endTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Seat(s) selected: "
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView_convocation_numOfSeatsSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/" />
+
+            <TextView
+                android:id="@+id/textView_convocation_maxNumOfSeats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <HorizontalScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -57,7 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:background="@android:color/darker_gray"
+                android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:text="Stage"
                 android:textColor="@android:color/white" />
@@ -69,7 +174,7 @@
                 android:horizontalSpacing="2dp"
                 android:paddingLeft="4dp"
                 android:paddingStart="4dp"
-                android:verticalSpacing="2dp" />
+                android:verticalSpacing="3dp" />
         </LinearLayout>
     </HorizontalScrollView>
 

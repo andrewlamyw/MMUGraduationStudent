@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -22,35 +23,67 @@ import com.lamyatweng.mmugraduationstudent.Constants;
 import com.lamyatweng.mmugraduationstudent.Convocation.ConvocationPaymentActivity;
 import com.lamyatweng.mmugraduationstudent.R;
 import com.lamyatweng.mmugraduationstudent.Session.ConvocationSession;
-import com.lamyatweng.mmugraduationstudent.SessionProgramme;
+import com.lamyatweng.mmugraduationstudent.SessionManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SeatSelectActivity extends AppCompatActivity {
 
-    final int GRID_COLUMN_WIDTH_IN_DP = 24;
+    final int GRID_COLUMN_WIDTH_IN_DP = 39; // default 24
     GridView mGridView;
     int mNumOfSelected = 0;
-    int mNumOfGuest = 2;
+    int mNumOfGuest;
+    SeatSelectAdapter mSeatAdapter;
+    List<String> mSelectedSeatIdList = new ArrayList<>();
+    TextView mNumOfSeatsSelectedTextView;
+    String mDate, mStartTime, mEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat_select);
 
-        String convoYear = "2017";
-        String programmeName = "Bachelor of Computer Science (Honours)";
-        final String faculty = "Faculty of Computing and Informatics";
+        // Receive convocation registration information from Intent
+        Intent intent = getIntent();
+        final String robeSize = intent.getStringExtra(Constants.EXTRA_CONVOCATION_ORDER_ROBE_SIZE);
+        final String gratitudeMessage = intent.getStringExtra(Constants.EXTRA_CONVOCATION_ORDER_GRATITUDE_MESSAGE);
+        final int sessionId = intent.getIntExtra(Constants.EXTRA_CONVOCATION_ORDER_SESSION_ID, -1);
+        mNumOfGuest = intent.getIntExtra(Constants.EXTRA_CONVOCATION_ORDER_NUMBER_OF_GUEST, -1);
 
-        // Get session id based on programme of student
-        Query sessionProgrammeQuery = Constants.FIREBASE_REF_SESSIONPROGRAMMES.child(convoYear).orderByChild(Constants.FIREBASE_ATTR_SESSIONPROGRAMMES_NAME).equalTo(programmeName);
-        sessionProgrammeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        // Get programme information of student from session manager
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        String programme = sessionManager.getProgramme();
+        final String faculty = sessionManager.getFaculty();
+
+        // Temporary hard code, to be replaced in future
+        String convoYear = "2016";
+
+        mNumOfSeatsSelectedTextView = (TextView) findViewById(R.id.textView_convocation_numOfSeatsSelected);
+        TextView maxNumOfSeatsTextView = (TextView) findViewById(R.id.textView_convocation_maxNumOfSeats);
+        final TextView sessionTextView = (TextView) findViewById(R.id.textView_convocation_session);
+        final TextView dateTextView = (TextView) findViewById(R.id.textView_convocation_date);
+        final TextView startTimeTextView = (TextView) findViewById(R.id.textView_convocation_startTime);
+        final TextView endTimeTextView = (TextView) findViewById(R.id.textView_convocation_endTime);
+
+        maxNumOfSeatsTextView.setText(Integer.toString(mNumOfGuest));
+        displaySeatArrangement(sessionId);
+
+
+        Query sessionQuery = Constants.FIREBASE_REF_SESSIONS.orderByChild(Constants.FIREBASE_ATTR_SESSIONS_ID).equalTo(sessionId);
+        sessionQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot sessionProgrammeSnapshot : dataSnapshot.getChildren()) {
-                    SessionProgramme sessionProgramme = sessionProgrammeSnapshot.getValue(SessionProgramme.class);
-                    if (sessionProgramme.getFaculty().equals(faculty)) {
-                        int sessionId = sessionProgramme.getSessionID();
-                        displaySeatArrangement(sessionId);
-                    }
+                for (DataSnapshot sessionSnapshot : dataSnapshot.getChildren()) {
+                    ConvocationSession session = sessionSnapshot.getValue(ConvocationSession.class);
+                    sessionTextView.setText(Integer.toString(session.getSessionNumber()));
+                    dateTextView.setText(session.getDate());
+                    startTimeTextView.setText(session.getStartTime());
+                    endTimeTextView.setText(session.getEndTime());
+
+                    mDate = session.getDate();
+                    mStartTime = session.getStartTime();
+                    mEndTime = session.getEndTime();
                 }
             }
 
@@ -83,6 +116,17 @@ public class SeatSelectActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "You can't proceed before finish seat selection", Toast.LENGTH_LONG).show();
                         } else {
                             Intent intent = new Intent(getApplicationContext(), ConvocationPaymentActivity.class);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_ATTENDANCE, true);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_ROBE_SIZE, robeSize);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_GRATITUDE_MESSAGE, gratitudeMessage);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_NUMBER_OF_GUEST, mNumOfGuest);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_DATE, mDate);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_START_TIME, mStartTime);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_END_TIME, mEndTime);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_SESSION_ID, sessionId);
+                            intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_SEAT_1, mSelectedSeatIdList.get(0));
+                            if (mNumOfGuest == 2)
+                                intent.putExtra(Constants.EXTRA_CONVOCATION_ORDER_SEAT_2, mSelectedSeatIdList.get(1));
                             startActivity(intent);
                         }
                         return true;
@@ -97,18 +141,18 @@ public class SeatSelectActivity extends AppCompatActivity {
     private void displaySeatArrangement(int sessionId) {
         // Initialise variables for displaying seats in GridView
 
-        final SeatAdapter seatAdapter = new SeatAdapter(this);
+        mSeatAdapter = new SeatSelectAdapter(this);
         mGridView = (GridView) findViewById(R.id.grid_view);
-        mGridView.setAdapter(seatAdapter);
+        mGridView.setAdapter(mSeatAdapter);
 
         // Get seats and add into adapter
         Query seatQuery = Constants.FIREBASE_REF_SEATS.orderByChild("sessionID").equalTo(sessionId);
         seatQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot seatsSnapshot) {
-                seatAdapter.clear();
+                mSeatAdapter.clear();
                 for (DataSnapshot seatSnapshot : seatsSnapshot.getChildren()) {
-                    seatAdapter.add(seatSnapshot.getValue(Seat.class));
+                    mSeatAdapter.add(seatSnapshot.getValue(Seat.class));
                 }
             }
 
@@ -134,58 +178,34 @@ public class SeatSelectActivity extends AppCompatActivity {
             }
         });
 
-        // Mark occupied when user click on a seat
+        // Temporary change color of seat to selected to show selected seat
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Seat selectedSeat = (Seat) parent.getItemAtPosition(position);
 
-                // Set the selectedSeat as selected, if the seat is available & mNumOfSelected is not more than mNumOfGuest
-                if (selectedSeat.getStatus().equals(getString(R.string.seat_status_available)) && mNumOfSelected < mNumOfGuest) {
-                    Query seatQuery = Constants.FIREBASE_REF_SEATS.orderByChild(Constants.FIREBASE_ATTR_SEATS_ID)
-                            .equalTo(selectedSeat.getId());
-                    seatQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot seatSnapshot : dataSnapshot.getChildren()) {
-                                Seat firebaseSeat = seatSnapshot.getValue(Seat.class);
-                                if (firebaseSeat.getSessionID() == selectedSeat.getSessionID()) {
-                                    String seatKey = seatSnapshot.getKey();
-                                    Constants.FIREBASE_REF_SEATS.child(seatKey).child(Constants.FIREBASE_ATTR_SEATS_STATUS).setValue(getString(R.string.seat_status_selected));
-                                    mNumOfSelected++;
-                                }
-                            }
-                        }
 
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-                        }
-                    });
+                if (selectedSeat.getStatus().equals(getString(R.string.seat_status_available)) && mNumOfSelected < mNumOfGuest) {
+                    // Set the selectedSeat as selected, if the seat is available & mNumOfSelected is not more than mNumOfGuest
+                    mSelectedSeatIdList.add(Integer.toString(selectedSeat.getId())); // Convert seat id to String because remove(int) is meant for object position
+                    mSeatAdapter.remove(selectedSeat);
+                    selectedSeat.setStatus(getString(R.string.seat_status_selected));
+                    mSeatAdapter.insert(selectedSeat, position);
+                    mNumOfSelected++;
+                } else if (selectedSeat.getStatus().equals(getString(R.string.seat_status_available)) && mNumOfSelected >= mNumOfGuest) {
+                    // Show error message, if the seat is available & mNumOfSelected is more or equals to mNumOfGuest
+                    Toast.makeText(getApplicationContext(), "Unchecked previous seat to select other", Toast.LENGTH_LONG).show();
                 } else if (selectedSeat.getStatus().equals(getString(R.string.seat_status_selected))) {
                     // Set the selectedSeat as available, if the seat is selected
-                    Query seatQuery = Constants.FIREBASE_REF_SEATS.orderByChild(Constants.FIREBASE_ATTR_SEATS_ID)
-                            .equalTo(selectedSeat.getId());
-                    seatQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot seatSnapshot : dataSnapshot.getChildren()) {
-                                Seat firebaseSeat = seatSnapshot.getValue(Seat.class);
-                                if (firebaseSeat.getSessionID() == selectedSeat.getSessionID()) {
-                                    String seatKey = seatSnapshot.getKey();
-                                    Constants.FIREBASE_REF_SEATS.child(seatKey).child(Constants.FIREBASE_ATTR_SEATS_STATUS).setValue(getString(R.string.seat_status_available));
-                                    mNumOfSelected--;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(FirebaseError firebaseError) {
-                        }
-                    });
+                    mSelectedSeatIdList.remove(Integer.toString(selectedSeat.getId())); // Convert seat id to String because remove(int) is meant for object position
+                    mSeatAdapter.remove(selectedSeat);
+                    selectedSeat.setStatus(getString(R.string.seat_status_available));
+                    mSeatAdapter.insert(selectedSeat, position);
+                    mNumOfSelected--;
                 } else {
-                    Toast.makeText(getApplicationContext(), "else", Toast.LENGTH_LONG).show();
+                    // Either the seat is occupied or disabled
                 }
-
+                mNumOfSeatsSelectedTextView.setText(Integer.toString(mNumOfSelected));
             }
         });
     }
