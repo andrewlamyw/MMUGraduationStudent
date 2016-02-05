@@ -12,11 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstudent.Convocation.ConvocationListFragment;
 import com.lamyatweng.mmugraduationstudent.Programme.ProgrammeListFragment;
 import com.lamyatweng.mmugraduationstudent.Student.StudentListFragment;
@@ -98,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         nameHeader.setText(mSession.getUserName());
 
         // Detecting Firebase Connection State
-        Constants.FIREBASE_REF_CONNECTED_STUDENT.addValueEventListener(new ValueEventListener() {
+        /*Constants.FIREBASE_REF_CONNECTED_STUDENT.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 boolean connected = snapshot.getValue(Boolean.class);
@@ -115,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(FirebaseError error) {
                 System.err.println("Listener was cancelled");
             }
-        });
+        });*/
     }
 
     /**

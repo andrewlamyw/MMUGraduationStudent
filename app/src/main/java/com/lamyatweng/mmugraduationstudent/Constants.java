@@ -35,6 +35,7 @@ public interface Constants {
     String FIREBASE_ATTR_SESSIONS_CONVOCATIONYEAR = "convocationYear";
     String FIREBASE_ATTR_SESSIONS_COLUMNSIZE = "columnSize";
     String FIREBASE_ATTR_SESSIONPROGRAMMES_NAME = "name";
+    String FIREBASE_ATTR_ORDERS_STUDENTID = "studentID";
 
     String TITLE_NEWS = "News";
     String TITLE_PROGRAMME = "Programme";

@@ -71,6 +71,7 @@ public class ConvocationPaymentActivity extends AppCompatActivity {
         if (convocationAttendance) {
             // student will attend the convocation
 
+            // Price is based on level of education
             switch (level) {
                 case Constants.PROGRAMME_LEVEL_DIPLOMA:
                     mPrice = 150.00;
@@ -89,6 +90,7 @@ public class ConvocationPaymentActivity extends AppCompatActivity {
                     break;
             }
 
+            // Set text view text
             priceTextView.setText("RM " + Double.toString(mPrice));
             attendanceTextView.setText(convocationAttendance.toString());
             dateTextView.setText(date);
@@ -98,6 +100,7 @@ public class ConvocationPaymentActivity extends AppCompatActivity {
             robeSizeTextView.setText(robeSize);
             gratitudeMessageTextView.setText(gratitudeMessage);
 
+            // Show text views
             dateLinearLayout.setVisibility(View.VISIBLE);
             timeLinearLayout.setVisibility(View.VISIBLE);
             numberOfGuestLinearLayout.setVisibility(View.VISIBLE);
@@ -120,11 +123,13 @@ public class ConvocationPaymentActivity extends AppCompatActivity {
             attendanceTextView.setText(convocationAttendance.toString());
         }
 
+        // card expiry month
         final Spinner monthSpinner = (Spinner) findViewById(R.id.spinner_month);
         ArrayAdapter<CharSequence> monthAdapter = ArrayAdapter.createFromResource(this, R.array.month, android.R.layout.simple_spinner_item);
         monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monthSpinner.setAdapter(monthAdapter);
 
+        // card expiry year
         final Spinner yearSpinner = (Spinner) findViewById(R.id.spinner_year);
         ArrayAdapter<CharSequence> yearAdapter = ArrayAdapter.createFromResource(this, R.array.year, android.R.layout.simple_spinner_item);
         yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -202,6 +207,7 @@ public class ConvocationPaymentActivity extends AppCompatActivity {
                         String paymentDateString = DateFormat.getDateInstance().format(paymentDate);
                         Order order = null;
                         if (convocationAttendance) {
+                            // Student will attend
                             switch (numberOfGuest) {
                                 case 0:
                                     order = new Order(convocationAttendance, mPrice, gratitudeMessage, numberOfGuest, paymentDateString, robeSize, sessionId, studentId);
@@ -214,9 +220,12 @@ public class ConvocationPaymentActivity extends AppCompatActivity {
                                     break;
                             }
                         } else {
+                            // Student will not attend
                             order = new Order(convocationAttendance, mPrice, paymentDateString, sessionId, studentId);
                         }
                         Constants.FIREBASE_REF_ORDERS.child(studentId).setValue(order);
+
+                        // Open order summary page
                         return true;
 
                     default:

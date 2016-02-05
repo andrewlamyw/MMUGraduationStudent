@@ -35,7 +35,6 @@
         <activity android:name=".Seat.SeatDisplayArrangementActivity" />
         <activity android:name=".Convocation.ConvocationRegistrationActivity" />
         <activity android:name=".Convocation.ConvocationPaymentActivity" />
-        <activity android:name=".Convocation.ConvocationRegistrationSummaryActivity" />
         <activity android:name=".Seat.SeatSelectActivity"></activity>
     </application>
 

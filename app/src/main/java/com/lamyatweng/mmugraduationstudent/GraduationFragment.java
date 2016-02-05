@@ -15,6 +15,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstudent.Convocation.ConvocationRegistrationActivity;
+import com.lamyatweng.mmugraduationstudent.Convocation.ConvocationSummaryFragment;
 import com.lamyatweng.mmugraduationstudent.Student.Student;
 
 public class GraduationFragment extends Fragment {
@@ -23,22 +24,15 @@ public class GraduationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_graduation, container, false);
 
-        // Get email of currently logged in user
+        // Get user firebase child key from shared preference
         SessionManager session = new SessionManager(getActivity().getApplicationContext());
         final String userKey = session.getKeyUserFirebaseKey();
-
-        // scenario 1: student which status has already completed. that means they already approved by staff
-        // scenario 2: student has already successfully apply for graduation, waiting for staff approval. status is pending approval
-        // scenario 3: student has not successful register
-        // scenario 3.1: because student hasn't click register
-        // scenario 3.2: because student doesn't fullfill one of the requirement
-
-        // Get student academic status from Firebase
 
         // Get reference of views
         final TextView textView = (TextView) view.findViewById(R.id.text_view_graduation);
         final Button button = (Button) view.findViewById(R.id.button_graduation);
 
+        // Get student academic status from firebase
         Constants.FIREBASE_REF_STUDENTS.child(userKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -51,14 +45,33 @@ public class GraduationFragment extends Fragment {
 
                 switch (studentStatus) {
                     case Constants.STUDENT_STATUS_COMPLETED:
-                        textView.setText("CONGRATULATION!\n\nYour application has been approved, please proceed with convocation registration.");
-                        button.setVisibility(View.VISIBLE);
-                        button.setText("CONVOCATION");
-                        button.setOnClickListener(new View.OnClickListener() {
+                        // The student graduation application has already been approved and is allowed to register convocation
+
+                        Constants.FIREBASE_REF_ORDERS.child(student.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(getActivity(), ConvocationRegistrationActivity.class);
-                                startActivity(intent);
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot == null) {
+                                    // The student has not register convocation, ask user to register convocation
+                                    textView.setText("CONGRATULATION!\n\nYour application has been approved, please proceed with convocation registration.");
+                                    button.setVisibility(View.VISIBLE);
+                                    button.setText("CONVOCATION");
+                                    button.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getActivity(), ConvocationRegistrationActivity.class);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                } else {
+                                    // The student has already register convocation, display convocation summary page
+                                    ConvocationSummaryFragment fragment = new ConvocationSummaryFragment();
+                                    getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
                             }
                         });
                         break;

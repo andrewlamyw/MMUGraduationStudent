@@ -23,7 +23,6 @@ import com.lamyatweng.mmugraduationstudent.Constants;
 import com.lamyatweng.mmugraduationstudent.Convocation.ConvocationPaymentActivity;
 import com.lamyatweng.mmugraduationstudent.R;
 import com.lamyatweng.mmugraduationstudent.Session.ConvocationSession;
-import com.lamyatweng.mmugraduationstudent.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +50,7 @@ public class SeatSelectActivity extends AppCompatActivity {
         final int sessionId = intent.getIntExtra(Constants.EXTRA_CONVOCATION_ORDER_SESSION_ID, -1);
         mNumOfGuest = intent.getIntExtra(Constants.EXTRA_CONVOCATION_ORDER_NUMBER_OF_GUEST, -1);
 
-        // Get programme information of student from session manager
-        SessionManager sessionManager = new SessionManager(getApplicationContext());
-        String programme = sessionManager.getProgramme();
-        final String faculty = sessionManager.getFaculty();
-
-        // Temporary hard code, to be replaced in future
-        String convoYear = "2016";
-
+        // Get reference of views
         mNumOfSeatsSelectedTextView = (TextView) findViewById(R.id.textView_convocation_numOfSeatsSelected);
         TextView maxNumOfSeatsTextView = (TextView) findViewById(R.id.textView_convocation_maxNumOfSeats);
         final TextView sessionTextView = (TextView) findViewById(R.id.textView_convocation_session);
@@ -68,7 +60,6 @@ public class SeatSelectActivity extends AppCompatActivity {
 
         maxNumOfSeatsTextView.setText(Integer.toString(mNumOfGuest));
         displaySeatArrangement(sessionId);
-
 
         Query sessionQuery = Constants.FIREBASE_REF_SESSIONS.orderByChild(Constants.FIREBASE_ATTR_SESSIONS_ID).equalTo(sessionId);
         sessionQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -140,7 +131,6 @@ public class SeatSelectActivity extends AppCompatActivity {
 
     private void displaySeatArrangement(int sessionId) {
         // Initialise variables for displaying seats in GridView
-
         mSeatAdapter = new SeatSelectAdapter(this);
         mGridView = (GridView) findViewById(R.id.grid_view);
         mGridView.setAdapter(mSeatAdapter);
@@ -183,8 +173,6 @@ public class SeatSelectActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Seat selectedSeat = (Seat) parent.getItemAtPosition(position);
-
-
                 if (selectedSeat.getStatus().equals(getString(R.string.seat_status_available)) && mNumOfSelected < mNumOfGuest) {
                     // Set the selectedSeat as selected, if the seat is available & mNumOfSelected is not more than mNumOfGuest
                     mSelectedSeatIdList.add(Integer.toString(selectedSeat.getId())); // Convert seat id to String because remove(int) is meant for object position
