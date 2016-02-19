@@ -13,19 +13,9 @@
             android:title="@string/title_news" />
 
         <item
-            android:id="@+id/drawer_programme"
-            android:icon="@mipmap/ic_class_black_24dp"
-            android:title="@string/title_programme" />
-
-        <item
             android:id="@+id/drawer_profile"
             android:icon="@mipmap/ic_account_circle_black_24dp"
             android:title="@string/title_profile" />
-
-        <item
-            android:id="@+id/drawer_student"
-            android:icon="@mipmap/ic_group_black_24dp"
-            android:title="@string/title_student" />
 
         <item
             android:id="@+id/drawer_graduation"
@@ -33,9 +23,9 @@
             android:title="@string/title_graduation" />
 
         <item
-            android:id="@+id/drawer_convocation"
-            android:icon="@drawable/graduation_cap_48"
-            android:title="@string/title_convocation" />
+            android:id="@+id/drawer_map"
+            android:icon="@mipmap/ic_map_black_24dp"
+            android:title="@string/title_map" />
     </group>
 
     <group

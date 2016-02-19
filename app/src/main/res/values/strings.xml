@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Grad. Student</string>
+    <string name="google_app_id">484412463529</string>
 
     <!-- Drawer Title-->
     <string name="title_news">News</string>
@@ -150,4 +151,6 @@
         <item>2029</item>
         <item>2030</item>
     </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_map">Map</string>
 </resources>

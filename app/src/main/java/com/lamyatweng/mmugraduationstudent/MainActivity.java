@@ -1,6 +1,7 @@
 package com.lamyatweng.mmugraduationstudent;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,13 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.lamyatweng.mmugraduationstudent.Convocation.ConvocationListFragment;
-import com.lamyatweng.mmugraduationstudent.Programme.ProgrammeListFragment;
-import com.lamyatweng.mmugraduationstudent.Student.StudentListFragment;
-
 public class MainActivity extends AppCompatActivity {
     public static Activity sMainActivity;
-    public static Boolean sIsConnected;
     SessionManager mSession;
     DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
@@ -89,29 +85,9 @@ public class MainActivity extends AppCompatActivity {
         // Set user email address and name in navigation drawer header
         View view = navigationView.getHeaderView(0);
         TextView emailHeader = (TextView) view.findViewById(R.id.header_email);
-        TextView nameHeader = (TextView) view.findViewById(R.id.header_user_name);
+        TextView nameHeader = (TextView) view.findViewById(R.id.header_username);
         emailHeader.setText(mSession.getUserEmail());
         nameHeader.setText(mSession.getUserName());
-
-        // Detecting Firebase Connection State
-        /*Constants.FIREBASE_REF_CONNECTED_STUDENT.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    sIsConnected = true;
-                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-                } else {
-                    sIsConnected = false;
-                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError error) {
-                System.err.println("Listener was cancelled");
-            }
-        });*/
     }
 
     /**
@@ -125,25 +101,17 @@ public class MainActivity extends AppCompatActivity {
                 NewsFragment newsFragment = new NewsFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
                 break;
-            case Constants.TITLE_PROGRAMME:
-                ProgrammeListFragment programmeListFragment = new ProgrammeListFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, programmeListFragment).commit();
-                break;
             case Constants.TITLE_PROFILE:
                 ProfileFragment profileFragment = new ProfileFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, profileFragment).commit();
-                break;
-            case Constants.TITLE_STUDENT:
-                StudentListFragment studentListFragment = new StudentListFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, studentListFragment).commit();
                 break;
             case Constants.TITLE_GRADUATION:
                 GraduationFragment graduationFragment = new GraduationFragment();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, graduationFragment).commit();
                 break;
-            case Constants.TITLE_CONVOCATION:
-                ConvocationListFragment convocationListFragment = new ConvocationListFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, convocationListFragment).commit();
+            case Constants.TITLE_MAP:
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
                 break;
             case Constants.TITLE_LOGOUT:
                 mSession.logoutUser();

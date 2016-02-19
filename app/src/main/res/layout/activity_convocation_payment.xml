@@ -173,7 +173,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Seat 2:"
+                    android:text="Seat 2: "
                     android:textStyle="bold" />
 
                 <TextView

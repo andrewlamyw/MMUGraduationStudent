@@ -50,7 +50,11 @@ public class GraduationFragment extends Fragment {
                         Constants.FIREBASE_REF_ORDERS.child(student.getId()).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (dataSnapshot == null) {
+                                if (dataSnapshot.hasChildren()) {
+                                    // The student has already register convocation, display convocation summary page
+                                    ConvocationSummaryFragment fragment = new ConvocationSummaryFragment();
+                                    getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                                } else {
                                     // The student has not register convocation, ask user to register convocation
                                     textView.setText("CONGRATULATION!\n\nYour application has been approved, please proceed with convocation registration.");
                                     button.setVisibility(View.VISIBLE);
@@ -62,16 +66,11 @@ public class GraduationFragment extends Fragment {
                                             startActivity(intent);
                                         }
                                     });
-                                } else {
-                                    // The student has already register convocation, display convocation summary page
-                                    ConvocationSummaryFragment fragment = new ConvocationSummaryFragment();
-                                    getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
                                 }
                             }
 
                             @Override
                             public void onCancelled(FirebaseError firebaseError) {
-
                             }
                         });
                         break;

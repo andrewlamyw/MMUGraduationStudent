@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -23,8 +24,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
-    Boolean mIsConnected;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,26 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         final TextInputLayout passwordWrapper = (TextInputLayout) findViewById(R.id.wrapper_login_password);
         final SessionManager sessionManager = new SessionManager(getApplicationContext());
         final ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar_login);
-
-        // Detecting Firebase Connection State
-        Constants.FIREBASE_REF_CONNECTED_STUDENT.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    mIsConnected = true;
-                    Toast.makeText(getApplicationContext(), "Connected", Toast.LENGTH_SHORT).show();
-                } else {
-                    mIsConnected = false;
-                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError error) {
-                System.err.println("Listener was cancelled");
-            }
-        });
 
         Button loginButton = (Button) findViewById(R.id.button_login);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onCancelled(FirebaseError firebaseError) {
+
                                 }
                             });
                         }
@@ -107,13 +87,32 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onAuthenticationError(FirebaseError firebaseError) {
                             spinner.setVisibility(View.GONE);
-                            if (mIsConnected)
-                                Toast.makeText(getApplicationContext(), "Wrong email or password", Toast.LENGTH_LONG).show();
-                            else
-                                Toast.makeText(getApplicationContext(), "Connection failed", Toast.LENGTH_LONG).show();
+                            // Something went wrong :(
+                            switch (firebaseError.getCode()) {
+                                case FirebaseError.USER_DOES_NOT_EXIST:
+                                    // handle a non existing user
+                                    Toast.makeText(getApplicationContext(), "Account does not exist.", Toast.LENGTH_LONG).show();
+                                    break;
+                                case FirebaseError.INVALID_PASSWORD:
+                                    // handle an invalid password
+                                    Toast.makeText(getApplicationContext(), "Password is incorrect.", Toast.LENGTH_LONG).show();
+                                    break;
+                                case FirebaseError.NETWORK_ERROR:
+                                    Toast.makeText(getApplicationContext(), "An error occurred while attempting to contact the authentication server.", Toast.LENGTH_LONG).show();
+                                    break;
+                            }
                         }
                     });
                 }
+            }
+        });
+
+        TextView forgotPasswordTextView = (TextView) findViewById(R.id.forgot_password);
+        forgotPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
+                startActivity(intent);
             }
         });
     }
