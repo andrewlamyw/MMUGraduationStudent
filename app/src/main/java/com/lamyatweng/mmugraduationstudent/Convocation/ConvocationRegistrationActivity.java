@@ -1,5 +1,6 @@
 package com.lamyatweng.mmugraduationstudent.Convocation;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -26,12 +27,14 @@ import com.lamyatweng.mmugraduationstudent.SessionManager;
 import com.lamyatweng.mmugraduationstudent.SessionProgramme;
 
 public class ConvocationRegistrationActivity extends AppCompatActivity {
+    public static Activity sConvocationRegistrationActivity;
     int mSessionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_convocation_registration);
+        sConvocationRegistrationActivity = this;
 
         // Get programme information of student from session manager
         SessionManager sessionManager = new SessionManager(getApplicationContext());

@@ -19,6 +19,10 @@ import com.lamyatweng.mmugraduationstudent.Convocation.ConvocationSummaryFragmen
 import com.lamyatweng.mmugraduationstudent.Student.Student;
 
 public class GraduationFragment extends Fragment {
+    TextView mTextView;
+    Button mButton;
+    String mUserKey;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,14 +30,21 @@ public class GraduationFragment extends Fragment {
 
         // Get user firebase child key from shared preference
         SessionManager session = new SessionManager(getActivity().getApplicationContext());
-        final String userKey = session.getKeyUserFirebaseKey();
+        mUserKey = session.getKeyUserFirebaseKey();
 
         // Get reference of views
-        final TextView textView = (TextView) view.findViewById(R.id.text_view_graduation);
-        final Button button = (Button) view.findViewById(R.id.button_graduation);
+        mTextView = (TextView) view.findViewById(R.id.text_view_graduation);
+        mButton = (Button) view.findViewById(R.id.button_graduation);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         // Get student academic status from firebase
-        Constants.FIREBASE_REF_STUDENTS.child(userKey).addValueEventListener(new ValueEventListener() {
+        Constants.FIREBASE_REF_STUDENTS.child(mUserKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Student student = dataSnapshot.getValue(Student.class);
@@ -56,10 +67,10 @@ public class GraduationFragment extends Fragment {
                                     getActivity().getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
                                 } else {
                                     // The student has not register convocation, ask user to register convocation
-                                    textView.setText("CONGRATULATION!\n\nYour application has been approved, please proceed with convocation registration.");
-                                    button.setVisibility(View.VISIBLE);
-                                    button.setText("CONVOCATION");
-                                    button.setOnClickListener(new View.OnClickListener() {
+                                    mTextView.setText("CONGRATULATION!\n\nYour application has been approved, please proceed with convocation registration.");
+                                    mButton.setVisibility(View.VISIBLE);
+                                    mButton.setText("CONVOCATION");
+                                    mButton.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent = new Intent(getActivity(), ConvocationRegistrationActivity.class);
@@ -76,13 +87,13 @@ public class GraduationFragment extends Fragment {
                         break;
 
                     case Constants.STUDENT_STATUS_PENDING_APPROVAL:
-                        textView.setText("Your graduation application has been submitted. We will review your application shortly.");
-                        button.setVisibility(View.GONE);
+                        mTextView.setText("Your graduation application has been submitted. We will review your application shortly.");
+                        mButton.setVisibility(View.GONE);
                         break;
 
                     default:
                         // check student whether fulfill all the requirements
-                        // scenario 1: fullfills, then show register button
+                        // scenario 1: fullfills, then show register mButton
                         // scenario 2: unfullfills, then show which requirements doesn't fullfill
 
                         if (studentStatus.equals(Constants.STUDENT_STATUS_ACTIVE) &&
@@ -91,14 +102,14 @@ public class GraduationFragment extends Fragment {
                                 financialDue <= 0 &&
                                 muet >= 3) {
 
-                            textView.setText("You have fulfilled all the requirements to graduate. Click the button to apply for graduation.");
-                            button.setVisibility(View.VISIBLE);
-                            button.setText("APPLY GRADUATION");
-                            button.setOnClickListener(new View.OnClickListener() {
+                            mTextView.setText("You have fulfilled all the requirements to graduate. Click the button to apply for graduation.");
+                            mButton.setVisibility(View.VISIBLE);
+                            mButton.setText("APPLY GRADUATION");
+                            mButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     // Change student status to pending approval
-                                    Constants.FIREBASE_REF_STUDENTS.child(userKey).child(Constants.FIREBASE_ATTR_STUDENTS_STATUS).setValue(Constants.STUDENT_STATUS_PENDING_APPROVAL);
+                                    Constants.FIREBASE_REF_STUDENTS.child(mUserKey).child(Constants.FIREBASE_ATTR_STUDENTS_STATUS).setValue(Constants.STUDENT_STATUS_PENDING_APPROVAL);
                                 }
                             });
                         } else {
@@ -113,8 +124,8 @@ public class GraduationFragment extends Fragment {
                                 message += "- No financial due remaining\n";
                             if (muet < 3)
                                 message += "- Muet must be at least band 3\n";
-                            textView.setText(message);
-                            button.setVisibility(View.GONE);
+                            mTextView.setText(message);
+                            mButton.setVisibility(View.GONE);
                         }
                         break;
                 }
@@ -124,8 +135,6 @@ public class GraduationFragment extends Fragment {
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
-
-        return view;
     }
 
     /**

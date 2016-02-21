@@ -18,6 +18,7 @@ import com.firebase.client.ValueEventListener;
 import com.lamyatweng.mmugraduationstudent.Constants;
 import com.lamyatweng.mmugraduationstudent.Order;
 import com.lamyatweng.mmugraduationstudent.R;
+import com.lamyatweng.mmugraduationstudent.Seat.SeatSelectActivity;
 import com.lamyatweng.mmugraduationstudent.SessionManager;
 
 import java.text.DateFormat;
@@ -225,7 +226,11 @@ public class ConvocationPaymentActivity extends AppCompatActivity {
                         }
                         Constants.FIREBASE_REF_ORDERS.child(studentId).setValue(order);
 
-                        // Open order summary page
+                        // Close activity
+                        ConvocationRegistrationActivity.sConvocationRegistrationActivity.finish();
+                        SeatSelectActivity.sSeatSelectActivity.finish();
+                        finish();
+
                         return true;
 
                     default:

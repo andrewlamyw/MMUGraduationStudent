@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.lamyatweng.mmugraduationstudent.News.NewsListFragment;
+
 public class MainActivity extends AppCompatActivity {
     public static Activity sMainActivity;
     SessionManager mSession;
@@ -59,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         // Set default fragment to display
-        NewsFragment newsFragment = new NewsFragment();
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+        NewsListFragment newsListFragment = new NewsListFragment();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsListFragment).commit();
 
         // Load page based on user clicked drawer menu item
         final NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -98,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch (menuItem.getTitle().toString()) {
             case Constants.TITLE_NEWS:
-                NewsFragment newsFragment = new NewsFragment();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsFragment).commit();
+                NewsListFragment newsListFragment = new NewsListFragment();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, newsListFragment).commit();
                 break;
             case Constants.TITLE_PROFILE:
                 ProfileFragment profileFragment = new ProfileFragment();

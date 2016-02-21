@@ -1,5 +1,6 @@
 package com.lamyatweng.mmugraduationstudent.Seat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -29,6 +30,7 @@ import java.util.List;
 
 public class SeatSelectActivity extends AppCompatActivity {
 
+    public static Activity sSeatSelectActivity;
     final int GRID_COLUMN_WIDTH_IN_DP = 39; // default 24
     GridView mGridView;
     int mNumOfSelected = 0;
@@ -42,6 +44,7 @@ public class SeatSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat_select);
+        sSeatSelectActivity = this;
 
         // Receive convocation registration information from Intent
         Intent intent = getIntent();

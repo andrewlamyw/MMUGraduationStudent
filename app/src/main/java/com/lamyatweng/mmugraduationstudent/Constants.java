@@ -22,6 +22,7 @@ public interface Constants {
     Firebase FIREBASE_REF_SESSIONPROGRAMMES = new Firebase("https://mmugraduation.firebaseio.com/sessionProgrammes");
     Firebase FIREBASE_REF_SEATS = new Firebase("https://mmugraduation.firebaseio.com/seats");
     Firebase FIREBASE_REF_ORDERS = new Firebase("https://mmugraduation.firebaseio.com/orders");
+    Firebase FIREBASE_REF_NEWS = new Firebase("https://mmugraduation.firebaseio.com/news");
 
     String FIREBASE_ATTR_STUDENTS_EMAIL = "email";
     String FIREBASE_ATTR_STUDENTS_NAME = "name";
